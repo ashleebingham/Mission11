@@ -15,9 +15,19 @@ namespace Mission11.API.Controllers
         }
 
         [HttpGet("AllBooks")]
-        public IEnumerable<Book> GetBooks()
+        public IActionResult GetBooks(int pageSize = 5, int pageNum = 1)
         {
-            return _bookContext.Books.ToList();
+            var books = _bookContext.Books
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            var totalNumBooks = _bookContext.Books.Count();
+
+            return Ok(new
+            {
+                Books = books,
+                TotalNumBooks = totalNumBooks
+            });
         }
 
     }
