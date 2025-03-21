@@ -156,3 +156,4 @@ C:\Users\ashle\Desktop\Mission11\backend\Mission11.API\bin\Debug\net9.0\runtimes
 C:\Users\ashle\Desktop\Mission11\backend\Mission11.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\ashle\Desktop\Mission11\backend\Mission11.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\ashle\Desktop\Mission11\backend\Mission11.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\ashle\Desktop\Mission11\backend\Mission11.API\obj\Debug\net9.0\Mission11.API.sourcelink.json
