@@ -16,13 +16,13 @@ namespace Mission11.API.Controllers
         }
 
         [HttpGet("AllBooks")]
-        public IActionResult GetBooks(int pageSize = 5, int pageNum = 1)
+        public IActionResult GetBooks(int pageSize = 5, int pageNum = 1, bool sortAscending = true)
         {
 
             string? favBookType = Request.Cookies["FavoriteBookType"];
             Console.WriteLine("~~~~~~COOKIE~~~~~~\n" + favBookType);
 
-            HttpContext.Response.Cookies.Append("FavoriteProjectType", "Borehole Well and Hand Pump", new CookieOptions
+            HttpContext.Response.Cookies.Append("FavoriteBookType", "Les Mis", new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true,
@@ -30,7 +30,11 @@ namespace Mission11.API.Controllers
                 Expires = DateTime.Now.AddMinutes(1),
             });
 
-            var books = _bookContext.Books
+            var booksQuery = sortAscending
+                ? _bookContext.Books.OrderBy(b => b.Title)
+                : _bookContext.Books.OrderByDescending(b => b.Title);
+
+            var books = booksQuery
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();

@@ -7,11 +7,12 @@ function BookList() {
   const [pageNum, setPageNum] = useState<number>(1);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [sortAscending, setSortAscending] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchBooks = async () => {
       const response = await fetch(
-        `https://localhost:5000/api/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}`,
+        `https://localhost:5000/api/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortAscending=${sortAscending ? 'true' : 'false'}`,
         {
           credentials: 'include',
         }
@@ -23,12 +24,19 @@ function BookList() {
     };
 
     fetchBooks();
-  }, [pageSize, pageNum, totalItems]);
+  }, [pageSize, pageNum, sortAscending]);
 
   return (
     <>
       <h1>Book Store</h1>
       <br />
+
+      {/* Sorting button */}
+      <button onClick={() => setSortAscending(!sortAscending)}>
+        Sort by Title {sortAscending ? '▲' : '▼'}
+      </button>
+
+      {/* Prints each book in its own card */}
       {books.map((b) => (
         <div id="bookCard" className="card" key={b.bookId}>
           <h3 className="card-title">{b.title}</h3>
@@ -66,6 +74,7 @@ function BookList() {
         </div>
       ))}
 
+      {/* Pagination buttons */}
       <button disabled={pageNum === 1} onClick={() => setPageNum(pageNum - 1)}>
         Previous
       </button>
@@ -89,6 +98,7 @@ function BookList() {
 
       <br />
       <label>
+        {/* Results per page */}
         Results per page:
         <select
           value={pageSize}
