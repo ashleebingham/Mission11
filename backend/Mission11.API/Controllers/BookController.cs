@@ -1,4 +1,5 @@
 ﻿using System.Security;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mission11.API.Data;
@@ -16,8 +17,14 @@ namespace Mission11.API.Controllers
         }
 
         [HttpGet("AllBooks")]
-        public IActionResult GetBooks(int pageSize = 5, int pageNum = 1, bool sortAscending = true)
+        public IActionResult GetBooks(int pageSize = 5, int pageNum = 1, bool sortAscending = true, [FromQuery] List<string>? bookTypes = null)
         {
+            var query = _bookContext.Books.AsQueryable();
+
+            if (bookTypes != null && bookTypes.Any())
+            {
+                query = query.Where(b => bookTypes.Contains(b.Category));
+            }
 
             string? favBookType = Request.Cookies["FavoriteBookType"];
             Console.WriteLine("~~~~~~COOKIE~~~~~~\n" + favBookType);
@@ -34,18 +41,29 @@ namespace Mission11.API.Controllers
                 ? _bookContext.Books.OrderBy(b => b.Title)
                 : _bookContext.Books.OrderByDescending(b => b.Title);
 
-            var books = booksQuery
+            var totalNumBooks = query.Count();
+
+            var books = query
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
-
-            var totalNumBooks = _bookContext.Books.Count();
 
             return Ok(new
             {
                 Books = books,
                 TotalNumBooks = totalNumBooks
-            });
+            }); 
+        }
+
+        [HttpGet("GetBookTypes")]
+        public IActionResult GetBookTypes()
+        {
+            var bookTypes = _bookContext.Books
+                 .Select(b => b.Category)
+                 .Distinct()
+                 .ToList();
+
+            return Ok(bookTypes);
         }
 
     }

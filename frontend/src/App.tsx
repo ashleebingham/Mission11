@@ -1,16 +1,23 @@
 import './App.css';
-import Fingerprint from './Fingerprint';
-import BookList from './BookList';
-import CookieConsent from "react-cookie-consent";
+import BookPage from './pages/BookPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CartPage from './pages/CartPage';
+import UserCartPage from './pages/UserCartPage';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
     <>
-      <BookList />
-      <CookieConsent>
-        This website uses cookies to enhance the user experience.
-      </CookieConsent>
-      <Fingerprint />
+      <CartProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<BookPage />} />
+            <Route path="/books" element={<BookPage />} />
+            <Route path="/cart/:bookTitle" element={<CartPage />} />
+            <Route path="/userCart" element={<UserCartPage />} />
+          </Routes>
+        </Router>
+      </CartProvider>
     </>
   );
 }
