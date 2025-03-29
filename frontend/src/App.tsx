@@ -1,7 +1,7 @@
 import './App.css';
 import BookPage from './pages/BookPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CartPage from './pages/CartPage';
+import BookInfoPage from './pages/BookInfoPage';
 import UserCartPage from './pages/UserCartPage';
 import { CartProvider } from './context/CartContext';
 
@@ -13,8 +13,11 @@ function App() {
           <Routes>
             <Route path="/" element={<BookPage />} />
             <Route path="/books" element={<BookPage />} />
-            <Route path="/cart/:bookTitle" element={<CartPage />} />
-            <Route path="/userCart" element={<UserCartPage />} />
+            <Route
+              path="/info/:bookTitle/:bookId/:bookPrice"
+              element={<BookInfoPage />}
+            />
+            <Route path="/cart" element={<UserCartPage />} />
           </Routes>
         </Router>
       </CartProvider>

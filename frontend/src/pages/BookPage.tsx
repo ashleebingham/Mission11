@@ -11,7 +11,7 @@ function BookPage() {
   return (
     <>
       <div className="container mt-4">
-          <WelcomeBand />
+        <WelcomeBand />
         <div className="row">
           <div className="col-md-3">
             <CategoryFilter
