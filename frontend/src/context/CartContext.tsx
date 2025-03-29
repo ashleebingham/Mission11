@@ -27,7 +27,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromCart = (bookId: number) => {
-    setCart((prevCart) => prevCart.filter((c) => c.bookId === bookId));
+    setCart((prevCart) => prevCart.filter((c) => c.bookId !== bookId));
   };
 
   const clearCart = () => {

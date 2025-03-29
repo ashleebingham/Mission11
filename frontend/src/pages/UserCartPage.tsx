@@ -4,7 +4,7 @@ import { CartItem } from '../types/CartItem';
 
 function UserCartPage() {
   const navigate = useNavigate();
-  const { cart } = useCart();
+  const { cart, removeFromCart } = useCart();
   return (
     <div>
       <h2>Your cart</h2>
@@ -15,7 +15,8 @@ function UserCartPage() {
           <ul>
             {cart.map((item: CartItem) => (
               <li key={item.bookId}>
-                {item.bookTitle}: ${item.bookQuantity.toFixed(2)}
+                {item.bookTitle}: {item.bookQuantity.toFixed(0)}
+                <button onClick={() => removeFromCart(item.bookId)}>Remove</button>
               </li>
             ))}
           </ul>
