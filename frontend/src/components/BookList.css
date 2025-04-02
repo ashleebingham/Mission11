@@ -1,0 +1,68 @@
+/* General pagination styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  /* Style for the buttons */
+  .pagination-button {
+    background-color: #f8f9fa;  /* Light background */
+    border: 1px solid #ccc;     /* Subtle border */
+    color: #007bff;              /* Blue text color */
+    padding: 8px 16px;           /* Padding for a nicer click area */
+    margin: 0 5px;               /* Space between buttons */
+    font-size: 14px;             /* Smaller font size */
+    border-radius: 4px;          /* Rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease;   /* Smooth transition for hover effect */
+  }
+  
+  /* Hover effect */
+  .pagination-button:hover {
+    background-color: #e9ecef;   /* Slightly darker background on hover */
+    border-color: #007bff;       /* Blue border on hover */
+    color: #0056b3;              /* Darker blue text on hover */
+  }
+  
+  /* Active (current) page button style */
+  .pagination-button.active {
+    background-color: #007bff;   /* Blue background for active page */
+    color: white;                /* White text for active page */
+    border-color: #007bff;       /* Blue border for active page */
+  }
+  
+  /* Disabled buttons */
+  .pagination-button:disabled {
+    background-color: #f1f1f1;   /* Lighter grey for disabled state */
+    color: #ccc;                 /* Grey text for disabled state */
+    cursor: not-allowed;         /* Change cursor to indicate it's not clickable */
+  }
+  
+  /* Styling for sorting button */
+.sorting-button {
+    background-color: #f8f9fa;  /* Light background */
+    border: 1px solid #ccc;     /* Subtle border */
+    color: #007bff;              /* Blue text color */
+    padding: 8px 16px;           /* Padding for a larger click area */
+    font-size: 14px;             /* Font size */
+    border-radius: 4px;          /* Rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease;   /* Smooth transition for hover effect */
+    margin-bottom: 20px;         /* Space below the button */
+  }
+  
+  /* Hover effect */
+  .sorting-button:hover {
+    background-color: #e9ecef;   /* Slightly darker background on hover */
+    border-color: #007bff;       /* Blue border on hover */
+    color: #0056b3;              /* Darker blue text on hover */
+  }
+  
+  /* Active (clicked) state */
+  .sorting-button:active {
+    background-color: #007bff;   /* Blue background for active state */
+    color: white;                /* White text for active state */
+    border-color: #007bff;       /* Blue border for active state */
+  }
+  

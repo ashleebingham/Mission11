@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Book } from '../types/Book';
 import { useNavigate } from 'react-router-dom';
+import './BookList.css';
 
 function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [books, setBooks] = useState<Book[]>([]);
@@ -26,7 +27,7 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
       const data = await response.json();
       setBooks(data.books || []);
       setTotalItems(data.totalNumBooks);
-      setTotalPages(Math.ceil(totalItems / pageSize));
+      setTotalPages(Math.ceil(data.totalNumBooks / pageSize)); // Update totalPages calculation here
     };
 
     fetchBooks();
@@ -35,7 +36,10 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   return (
     <>
       {/* Sorting button */}
-      <button onClick={() => setSortAscending(!sortAscending)}>
+      <button
+        onClick={() => setSortAscending(!sortAscending)}
+        className="sorting-button"
+      >
         Sort by Title {sortAscending ? '▲' : '▼'}
       </button>
 
@@ -86,43 +90,34 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
       ))}
 
       {/* Pagination buttons */}
-      <button disabled={pageNum === 1} onClick={() => setPageNum(pageNum - 1)}>
-        Previous
-      </button>
-
-      {[...Array(totalPages)].map((_, index) => (
+      <div className="pagination">
         <button
-          key={index + 1}
-          onClick={() => setPageNum(index + 1)}
-          disabled={pageNum === index + 1}
+          disabled={pageNum === 1}
+          onClick={() => setPageNum(pageNum - 1)}
+          className="pagination-button"
         >
-          {index + 1}
+          Previous
         </button>
-      ))}
 
-      <button
-        disabled={pageNum === totalPages}
-        onClick={() => setPageNum(pageNum + 1)}
-      >
-        Next
-      </button>
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => setPageNum(index + 1)}
+            disabled={pageNum === index + 1}
+            className={`pagination-button ${pageNum === index + 1 ? 'active' : ''}`}
+          >
+            {index + 1}
+          </button>
+        ))}
 
-      <br />
-      <label>
-        {/* Results per page */}
-        Results per page:
-        <select
-          value={pageSize}
-          onChange={(p) => {
-            setPageSize(Number(p.target.value));
-            setPageNum(1);
-          }}
+        <button
+          disabled={pageNum === totalPages}
+          onClick={() => setPageNum(pageNum + 1)}
+          className="pagination-button"
         >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-        </select>
-      </label>
+          Next
+        </button>
+      </div>
     </>
   );
 }

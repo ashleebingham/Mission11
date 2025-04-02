@@ -21,28 +21,21 @@ namespace Mission11.API.Controllers
         {
             var query = _bookContext.Books.AsQueryable();
 
+            // Apply filtering by category
             if (bookTypes != null && bookTypes.Any())
             {
                 query = query.Where(b => bookTypes.Contains(b.Category));
             }
 
-            string? favBookType = Request.Cookies["FavoriteBookType"];
-            Console.WriteLine("~~~~~~COOKIE~~~~~~\n" + favBookType);
+            // Apply sorting by title
+            query = sortAscending
+                ? query.OrderBy(b => b.Title)
+                : query.OrderByDescending(b => b.Title);
 
-            HttpContext.Response.Cookies.Append("FavoriteBookType", "Les Mis", new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.Now.AddMinutes(1),
-            });
-
-            var booksQuery = sortAscending
-                ? _bookContext.Books.OrderBy(b => b.Title)
-                : _bookContext.Books.OrderByDescending(b => b.Title);
-
+            // Count the total number of books after filtering and sorting
             var totalNumBooks = query.Count();
 
+            // Get the books for the current page
             var books = query
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
@@ -52,8 +45,9 @@ namespace Mission11.API.Controllers
             {
                 Books = books,
                 TotalNumBooks = totalNumBooks
-            }); 
+            });
         }
+
 
         [HttpGet("GetBookTypes")]
         public IActionResult GetBookTypes()
