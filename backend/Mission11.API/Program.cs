@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
 options.AddPolicy("AllowFrontend",
     policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://blue-dune-0205fc81e.6.azurestaticapps.net/")
+        policy.WithOrigins("http://localhost:3000", "https://blue-dune-0205fc81e.6.azurestaticapps.net")
                 .AllowCredentials()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
