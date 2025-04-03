@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
 options.AddPolicy("AllowFrontend",
     policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins("http://localhost:3000", "https://mission13-bingham-backend-ezh2cwdwg6e4cgct.eastus-01.azurewebsites.net", "https://mission13-bingham-backend.azurewebsites.net")
                 .AllowCredentials()
                 .AllowAnyHeader()
                 .AllowAnyMethod();

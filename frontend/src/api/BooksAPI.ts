@@ -5,7 +5,7 @@ interface FetchBooksResponse {
   totalNumBooks: number;
 }
 
-const API_URL = 'https://localhost:5000/api/Book';
+const API_URL = 'https://mission13-bingham-backend-ezh2cwdwg6e4cgct.eastus-01.azurewebsites.net/api/book';
 
 export const fetchBooks = async (
   pageSize: number,
@@ -71,7 +71,6 @@ export const updateBook = async (
     });
 
     return await response.json();
-
   } catch (error) {
     console.error('Error updating book:', error);
     throw error;
@@ -79,18 +78,16 @@ export const updateBook = async (
 };
 
 export const deleteBook = async (bookId: number): Promise<void> => {
-    try {
-        const response = await fetch(`${API_URL}/DeleteBook/${bookId}`,
-            {
-                method: 'DELETE'
-            }
-        );
+  try {
+    const response = await fetch(`${API_URL}/DeleteBook/${bookId}`, {
+      method: 'DELETE',
+    });
 
-        if (!response.ok) {
-            throw new Error('Fialed to delte project');
-        }
-    } catch (error) {
-        console.error('Error deleting book:', error);
-        throw error;
+    if (!response.ok) {
+      throw new Error('Fialed to delte project');
     }
+  } catch (error) {
+    console.error('Error deleting book:', error);
+    throw error;
+  }
 };
